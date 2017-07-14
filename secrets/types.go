@@ -28,27 +28,29 @@ type BulkRewrappedSecret struct {
 
 type UnencryptedSecret struct {
 	client.Resource
-	Backend   string `json:"backend"`
-	KeyName   string `json:"keyName"`
-	ClearText string `json:"clearText,omitempty"`
+	Backend     string `json:"backend"`
+	ClearText   string `json:"clearText,omitempty"`
+	ExternalURI string `json:"externalURI,omitempty"`
+	KeyName     string `json:"keyName"`
 }
 
 type EncryptedSecret struct {
 	client.Resource
 	Backend             string `json:"backend"`
-	KeyName             string `json:"keyName"`
 	CipherText          string `json:"cipherText,omitempty"`
-	HashAlgorithm       string `json:"hashAlgorithm"`
 	EncryptionAlgorithm string `json:"encryptionAglorigthm"`
-	Signature           string `json:"signature"`
+	ExternalURI         string `json:"externalURI,omitempty"`
+	HashAlgorithm       string `json:"hashAlgorithm"`
+	KeyName             string `json:"keyName"`
 	RewrapKey           string `json:"rewrapKey,omitempty"`
+	Signature           string `json:"signature"`
 	tmpKey              aesutils.AESKey
 }
 
 type RewrappedSecret struct {
 	client.Resource
-	SecretName string `json:"name,omitempty"`
 	RewrapText string `json:"rewrapText,omitempty"`
+	SecretName string `json:"name,omitempty"`
 }
 
 type Secret struct {
@@ -56,15 +58,15 @@ type Secret struct {
 }
 
 type EncryptedData struct {
-	EncryptionAlgorithm string           `json:"encryptionAlgorithm,omitempty"`
-	EncryptedText       string           `json:"encryptedText,omitempty"`
-	HashAlgorithm       string           `json:"hashAlgorithm,omitempty"`
 	EncryptedKey        RSAEncryptedData `json:"encryptedKey,omitempty"`
+	EncryptedText       string           `json:"encryptedText,omitempty"`
+	EncryptionAlgorithm string           `json:"encryptionAlgorithm,omitempty"`
+	HashAlgorithm       string           `json:"hashAlgorithm,omitempty"`
 	Signature           string           `json:"signature,omitempty"`
 }
 
 type RSAEncryptedData struct {
-	EncryptionAlgorithm string `json:"encryptionAlgorithm,omitempty"`
 	EncryptedText       string `json:"encryptedText,omitempty"`
+	EncryptionAlgorithm string `json:"encryptionAlgorithm,omitempty"`
 	HashAlgorithm       string `json:"hashAlgorithm,omitempty"`
 }
