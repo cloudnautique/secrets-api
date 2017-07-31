@@ -48,6 +48,7 @@ func NewRouter() *mux.Router {
 	schemas.AddType("secretInput", secrets.UnencryptedSecret{})
 	schemas.AddType("encryptedSecret", secrets.EncryptedSecret{})
 	schemas.AddType("rewrappedSecret", secrets.RewrappedSecret{})
+	schemas.AddType("vaultPolicyConfig", secrets.VaultPolicyConfig{})
 
 	secret := schemas.AddType("secret", secrets.Secret{})
 	secret.CollectionMethods = []string{"GET"}

@@ -28,22 +28,25 @@ type BulkRewrappedSecret struct {
 
 type UnencryptedSecret struct {
 	client.Resource
-	Backend     string `json:"backend"`
-	ClearText   string `json:"clearText,omitempty"`
-	ExternalURI string `json:"externalURI,omitempty"`
-	KeyName     string `json:"keyName"`
+	Backend           string            `json:"backend"`
+	ExternalURI       string            `json:"externalURI,omitempty"`
+	KeyName           string            `json:"keyName"`
+	ClearText         string            `json:"clearText,omitempty"`
+	VaultPolicyConfig VaultPolicyConfig `json:"vaultPolicyConfig,omitempty"`
 }
 
 type EncryptedSecret struct {
 	client.Resource
-	Backend             string `json:"backend"`
-	CipherText          string `json:"cipherText,omitempty"`
-	EncryptionAlgorithm string `json:"encryptionAglorigthm"`
-	ExternalURI         string `json:"externalURI,omitempty"`
-	HashAlgorithm       string `json:"hashAlgorithm"`
-	KeyName             string `json:"keyName"`
-	RewrapKey           string `json:"rewrapKey,omitempty"`
-	Signature           string `json:"signature"`
+	Backend             string                 `json:"backend"`
+	CipherText          string                 `json:"cipherText,omitempty"`
+	EncryptionAlgorithm string                 `json:"encryptionAglorigthm"`
+	ExternalURI         string                 `json:"externalURI,omitempty"`
+	HashAlgorithm       string                 `json:"hashAlgorithm"`
+	KeyName             string                 `json:"keyName"`
+	Kind                string                 `json:"kind,omitempty"`
+	RewrapKey           string                 `json:"rewrapKey,omitempty"`
+	Signature           string                 `json:"signature"`
+	Metadata            map[string]interface{} `json:"metadata,omitempty"`
 	tmpKey              aesutils.AESKey
 }
 
@@ -69,4 +72,11 @@ type RSAEncryptedData struct {
 	EncryptedText       string `json:"encryptedText,omitempty"`
 	EncryptionAlgorithm string `json:"encryptionAlgorithm,omitempty"`
 	HashAlgorithm       string `json:"hashAlgorithm,omitempty"`
+}
+
+type VaultPolicyConfig struct {
+	client.Resource
+	IssuingToken string `json:"issuingToken"`
+	Policy       string `json:"policy"`
+	VaultURL     string `json:"vaultURL"`
 }

@@ -6,7 +6,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 
-	"github.com/rancher/go-rancher/api"
 	"github.com/rancher/go-rancher/client"
 	"github.com/rancher/secrets-api/backends"
 	"github.com/rancher/secrets-api/pkg/aesutils"
@@ -21,12 +20,23 @@ func GetUnencryptedSecretResource() *UnencryptedSecret {
 	return &UnencryptedSecret{}
 }
 
-func NewUnencryptedSecret(context *api.ApiContext) *UnencryptedSecret {
+func NewUnencryptedSecret() *UnencryptedSecret {
 	return &UnencryptedSecret{
 		Resource: client.Resource{
 			Type: "secretInput",
 		},
 	}
+}
+
+func NewPopulatedUncryptedSecret(config []byte, clearText string) (*UnencryptedSecret, error) {
+	sec := &UnencryptedSecret{
+		ClearText: clearText,
+	}
+	err := json.Unmarshal(config, sec)
+	if err != nil {
+		return sec, err
+	}
+	return sec, nil
 }
 
 func NewEncryptedSecret(clearSecret *UnencryptedSecret) (*EncryptedSecret, error) {

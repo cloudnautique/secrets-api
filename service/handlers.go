@@ -43,13 +43,18 @@ func ListSecrets(w http.ResponseWriter, r *http.Request) (int, error) {
 func CreateSecret(w http.ResponseWriter, r *http.Request) (int, error) {
 	apiContext := api.GetApiContext(r)
 
-	sec := secrets.NewUnencryptedSecret(apiContext)
+	sec := secrets.NewUnencryptedSecret()
 
 	jsonDecoder := json.NewDecoder(r.Body)
 
 	err := jsonDecoder.Decode(&sec)
 	if err != nil {
 		logrus.Errorf("Could not decode: %s because %s", r.Body, err)
+		return http.StatusBadRequest, err
+	}
+
+	err = sec.HandleVaultConfig()
+	if err != nil {
 		return http.StatusBadRequest, err
 	}
 
