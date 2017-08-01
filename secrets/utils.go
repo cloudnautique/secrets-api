@@ -24,6 +24,8 @@ func (us *UnencryptedSecret) HandleVaultConfig() error {
 		us.ClearText = string(vpc)
 	}
 
+	us.Kind = "vault-policy"
+
 	return nil
 }
 

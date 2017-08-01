@@ -263,3 +263,21 @@ def test_vault_backend_with_storage_dir(single_secret):
 
     secret_from_vault = client.read(json_secret_alt["cipherText"])
     assert secret_from_vault is None
+
+
+def test_vault_policy_request(single_secret):
+    single_secret["clearText"] = ""
+    single_secret["vaultPolicyConfig"] = {
+        "policy": "app1",
+        "vaultURL": "http://example.com",
+        "issuingToken": "aaa-bbb"
+    }
+
+    json_secret = python_post_response(CREATE_URL, single_secret)
+
+    assert json_secret["kind"] == "vault-policy"
+
+    json_secret["rewrapKey"] = insecure_public_key
+
+    rewrap_secret = python_post_response(REWRAP_URL, json_secret)
+    assert rewrap_secret["kind"] == "vault-policy"

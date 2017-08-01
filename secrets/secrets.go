@@ -46,6 +46,7 @@ func NewEncryptedSecret(clearSecret *UnencryptedSecret) (*EncryptedSecret, error
 		},
 		Backend: clearSecret.Backend,
 		KeyName: clearSecret.KeyName,
+		Kind:    clearSecret.Kind,
 	}
 
 	return secret, secret.seal(clearSecret.ClearText)
@@ -58,6 +59,7 @@ func NewRewrappedSecret(encSecret *EncryptedSecret) (*RewrappedSecret, error) {
 		Resource: client.Resource{
 			Type: "rewrappedSecret",
 		},
+		Kind: encSecret.Kind,
 	}
 
 	if encSecret.tmpKey == nil {

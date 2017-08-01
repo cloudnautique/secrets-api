@@ -33,6 +33,7 @@ type UnencryptedSecret struct {
 	KeyName           string            `json:"keyName"`
 	ClearText         string            `json:"clearText,omitempty"`
 	VaultPolicyConfig VaultPolicyConfig `json:"vaultPolicyConfig,omitempty"`
+	Kind              string
 }
 
 type EncryptedSecret struct {
@@ -52,6 +53,7 @@ type EncryptedSecret struct {
 
 type RewrappedSecret struct {
 	client.Resource
+	Kind       string `json:"kind,omitempty"`
 	RewrapText string `json:"rewrapText,omitempty"`
 	SecretName string `json:"name,omitempty"`
 }
